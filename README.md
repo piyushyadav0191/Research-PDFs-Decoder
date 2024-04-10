@@ -1,5 +1,7 @@
 # Research-PDFs-Decoder
 
+![Image](https://i.ibb.co/wRSgNNf/Screenshot-2024-04-10-19-33-28-1920x1080.png){: .center}
+
 ## Introduction
 Research Pdf Decoder is a Full Stack side project which focus on extracting important notes from any Research papers PDF. It also capable of chatting with PDFs
 
