@@ -1,6 +1,7 @@
+# Research-PDFs-Decoder
 
 ## Introduction
-
+Research Pdf Decoder is a Full Stack side project which focus on extracting important notes from any Research papers PDF. It also capable of chatting with PDFs
 
 ## Setup
 
@@ -31,69 +32,7 @@ docker run -p 8000:8000 -d --rm --name unstructured-api quay.io/unstructured-io/
 
 ### Database Setup in Supabase
 
-Execute the following SQL commands in your Supabase project to set up the required database structure:
-
-```sql
--- Enable the pgvector extension
-create extension vector;
-
--- Create tables for storing Arxiv papers, embeddings, and question answering data
-CREATE TABLE arxiv_papers (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  created_at TIMESTAMPTZ DEFAULT now(),
-  paper TEXT,
-  arxiv_url TEXT,
-  notes JSONB[],
-  name TEXT
-);
-
-CREATE TABLE arxiv_embeddings (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  created_at TIMESTAMPTZ DEFAULT now(),
-  content TEXT,
-  embedding vector,
-  metadata JSONB
-);
-
-CREATE TABLE arxiv_question_answering (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  created_at TIMESTAMPTZ DEFAULT now(),
-  question TEXT,
-  answer TEXT,
-  followup_questions TEXT[],
-  context TEXT
-);
-
--- Create a function for document matching
-create function match_documents (
-  query_embedding vector(1536),
-  match_count int DEFAULT null,
-  filter jsonb DEFAULT '{}'
-) returns table (
-  id UUID,
-  content text,
-  metadata jsonb,
-  embedding vector,
-  similarity float
-)
-language plpgsql
-as $$
-#variable_conflict use_column
-begin
-  return query
-  select
-    id,
-    content,
-    metadata,
-    embedding,
-    1 - (arxiv_embeddings.embedding <=> query_embedding) as similarity
-  from arxiv_embeddings
-  where metadata @> filter
-  order by arxiv_embeddings.embedding <=> query_embedding
-  limit match_count;
-end;
-$$;
-```
+You can contact me for database query commands 
 
 ### Supabase Type Generation
 
@@ -124,4 +63,4 @@ yarn start:api
 ```shell
 yarn start:web
 ```
-# Research-PDFs-Decoder
+
