@@ -44,6 +44,10 @@ Add your project ID to the Supabase generate types script in package.json:
 }
 ```
 
+## Limitations
+
+- As of now, It supports Max page limit of 12 due to tokens.
+
 ## Running the Application
 
 ### Build the API Server
